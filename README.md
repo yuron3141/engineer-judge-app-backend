@@ -1,24 +1,39 @@
-# README
+# エンジニア診断アプリ(バックエンド)
+エンジニア診断アプリのバックエンド機能のリポジトリです。
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+デプロイしたサイトはこちらから
 
-Things you may want to cover:
+https://www.10typesengineer.net
 
-* Ruby version
+# サイト概要
+10タイプあるエンジニアの性質パターンから、質問の回答のパラメータによって結果内容を表示するというサイトです。
 
-* System dependencies
+診断結果はPOSTメソッドを通じて送られてデータベースに格納されます。
+またユーザは統計情報を見ることができます。(統計人数が50人以上の場合、自動的に有効化される)
 
-* Configuration
 
-* Database creation
+# 機能の説明
 
-* Database initialization
+フロントの機能としては各パラメータ値の保存とパラメータからのタイプの判断処理、そして結果等の表示、バックエンドへのユーザの診断結果の送信機能、バックエンドからの統計データの取得機能が主な役割です。
 
-* How to run the test suite
+バックエンドの機能としてはPOSTメソッドで渡されたデータからデータを整理してその内容をDBへ保存する機能とGETメソッドでリクエストがあったときに統計結果を予め書き込んだjsonファイルの内容を返送する機能、そして1日1回データベースを走査して統計情報を整理しjsonに格納するバッチ処理が機能としてあります。
 
-* Services (job queues, cache servers, search engines, etc.)
+# インフラストラクチャー
+今回のアプリは機能としては少ないため、AWSやGCPなどといったIaaSは用いず、
+PaaSの一種であるNetlifyとHerokuにデプロイをしています。
+そのためCI/CDは独自に組む必要はなく自動的にPaaS側が行ってくれます。
 
-* Deployment instructions
+# 製作期間等
+アプリの構想に1日、製作期間は1週間半。製作時間は55～60時間ほどです。
 
-* ...
+# 主な使用技術
+- フロントエンド
+  - React.js
+- バックエンド
+  - Ruby
+  - Ruby on Rails
+- データベース
+  - PostgreSQL
+- インフラストラクチャ
+  - Netlify
+  - Heroku
