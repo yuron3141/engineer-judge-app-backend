@@ -25,4 +25,77 @@ ActiveRecord::Schema.define(version: 2022_12_26_120624) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+
+  # 統計データ用テーブル(10個)生成
+  # aは事業者型、bは社会指向型、cは技術職人型、dはモノづくり楽しみ型、eは職業人型
+  create_table "type_a1_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_a2_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_b1_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_b2_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_c1_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_c2_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_d1_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_d2_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_e1_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "type_e2_statistics", force: :cascade do |t|
+    t.integer "generation"
+    t.integer "sum"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
 end
