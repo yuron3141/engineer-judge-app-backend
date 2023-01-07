@@ -4,7 +4,7 @@ class TaskJob < ApplicationJob
   # 各統計テーブル(10個)に保存する処理
   def perform(*args)
 
-    yesterday = Date.current
+    yesterday = Date.current.yesterday
 
     #昨日登録されたテスト結果をすべて取得する
     today_submits = Submit.where(created_at: yesterday.in_time_zone.all_day)

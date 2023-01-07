@@ -14,21 +14,30 @@ module Api
             # POST /api/v1/submits/
             # データベース(Submit)への登録処理
             def create
-                main = Submit.new(
-                    ip_address: set_ip, 
-                    point_intention: post_params[:calced][0],
-                    point_view: post_params[:calced][1],
-                    point_expert: post_params[:calced][2],
-                    point_tech: post_params[:calced][3],
-                    generation: post_params[:age],
-                    sex: post_params[:sex],
-                    month: post_params[:month]
-                )
+                today = Date.current
 
-                if main.save
-                    render json: { status: 'SUCCESS', data: main }
+                # 1 IPアドレスあたり1日1つまでデータ登録受付
+                check_already_submit = Submit.where(created_at: today.in_time_zone.all_day).find_by(ip_address: set_ip)
+
+                if check_already_submit == nil
+                    main = Submit.new(
+                        ip_address: set_ip, 
+                        point_intention: post_params[:calced][0],
+                        point_view: post_params[:calced][1],
+                        point_expert: post_params[:calced][2],
+                        point_tech: post_params[:calced][3],
+                        generation: post_params[:age],
+                        sex: post_params[:sex],
+                        month: post_params[:month]
+                    )
+    
+                    if main.save
+                        render json: { status: 'SUCCESS', data: main }
+                    else
+                        render json: { status: 'ERROR', data: main.errors }
+                    end
                 else
-                    render json: { status: 'ERROR', data: main.errors }
+                    render json: { status: 'ERROR', data: "You have already submitted your scores." }
                 end
             end
 
