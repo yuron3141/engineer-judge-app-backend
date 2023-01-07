@@ -2,15 +2,16 @@ module Api
     module V1
         class MainsController < ApplicationController
 
-            # 作成・取得・削除・編集の許可
-            before_action :set_ip, only: [:show, :update, :destroy]
+            before_action :select_data, only: [:show, :update, :destroy]
 
-            # DBのソート(DESC:降順)結果を返す
+            # GET /api/v1/submits/
+            # DBのソート(DESC:降順)をしてテーブル内のレコードすべてを返す
             def index
                 mains = Submit.order(created_at: :desc)
                 render json: { status: 'SUCCESS', message: 'Loaded posts', data: mains }
             end
-
+            
+            # POST /api/v1/submits/
             # データベース(Submit)への登録処理
             def create
                 main = Submit.new(
@@ -31,7 +32,30 @@ module Api
                 end
             end
 
+            # GET /api/v1/submits/1
+            def show
+                render json: { status: 'SUCCESS', data: @data }
+            end
+
+            # PUT/PATCH /api/v1/submits/1
+            def update
+                if @data.update(post_params)
+                    render json: { status: 'SUCCESS' data: @data }
+                else
+                    render json: { status: 'ERROR', data: @data.errors }
+                end
+            end
+
+            # DELETE /api/v1/submits/1
+            def destroy
+                @data.destroy
+                render json: { status: 'SUCCESS', data: @data }
+            end
+
             private
+            def select_data
+                @data = Submit.find(params[:id])
+            end
 
             def set_ip
                 # Global_IPの取得

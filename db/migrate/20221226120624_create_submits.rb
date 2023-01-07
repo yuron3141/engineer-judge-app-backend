@@ -10,7 +10,6 @@ class CreateSubmits < ActiveRecord::Migration[6.0]
       t.integer :sex , :default => 0
       t.integer :month
 
-
       t.timestamps
     end
   end
