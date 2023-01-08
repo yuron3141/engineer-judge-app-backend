@@ -28,6 +28,7 @@ module Api
                 datas.each do |index|
                     sum_row = (Vector.elements(sum_row) + Vector.elements(index)).to_a
                 end
+                
                 #datasに追加
                 datas.push(sum_row)
 
