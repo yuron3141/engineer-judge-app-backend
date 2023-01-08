@@ -1,54 +1,34 @@
+#多次元配列の要素をベクトル的に和をとるためにmatrixをrequire
+require 'matrix'
+
 module Api
     module V1
         class StatisticsController < ApplicationController
             # GET /api/v1/statistics/
             # 統計データを返す
             def index
-                all_type_datas = [  TypeA1Statistic.all, 
-                                    TypeA2Statistic.all,
-                                    TypeB1Statistic.all,
-                                    TypeB2Statistic.all,
-                                    TypeC1Statistic.all,
-                                    TypeC2Statistic.all,
-                                    TypeD1Statistic.all,
-                                    TypeD2Statistic.all,
-                                    TypeE1Statistic.all,
-                                    TypeE2Statistic.all
-                                ]
+                type_statistics = [ TypeA1Statistic.all, TypeA2Statistic.all, TypeB1Statistic.all,
+                                    TypeB2Statistic.all, TypeC1Statistic.all, TypeC2Statistic.all,
+                                    TypeD1Statistic.all, TypeD2Statistic.all, TypeE1Statistic.all,
+                                    TypeE2Statistic.all]
                 
                 #合計受験人数のカウント
-                sum = 0
-                all_type_datas.each do |index|
-                    @record_num = index.count
-
-                    for num in 1..@record_num do
-                        sum += index.find_by(id: num).sum
-                    end
-                end
+                sum = type_statistics.sum { |stats| stats.sum(&:sum) }
 
                 #各年代毎データのカウント
-                datas = []
-                row = []
-                for num in 1..@record_num do
-
-                    all_type_datas.each do |index|
-                        
-                        if num != @record_num
-                            row.push(index.find_by(id: num).sum)
-                        else
-                            datas.push(row)
-                            row =[]
-                        end
+                datas = Array.new(7) { Array.new(10, 0) }
+                type_statistics.each_with_index do |stats, index|
+                    stats[0...7].each_with_index do |stat, i|
+                        datas[i][index] = stat.sum
                     end
                 end
 
                 #全世代のデータカウント(和をとる)
                 sum_row = [0,0,0,0,0,0,0,0,0,0]
-                for num in @record_num do
-                    for num2 in sum_row.length do
-                        sum_row[num] += datas[num][num2]
-                    end
+                datas.each do |index|
+                    sum_row = (Vector.elements(sum_row) + Vector.elements(index)).to_a
                 end
+                #datasに追加
                 datas.push(sum_row)
 
                 render json: { sum: sum, datas: datas }
